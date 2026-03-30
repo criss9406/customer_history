@@ -1,0 +1,267 @@
+/* ============================================================
+   style.css — Historial Clínico
+   Estilos base, simples y mantenibles.
+   ============================================================ */
+
+/* ── Reset básico ───────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f4f6f9;
+    color: #2d3748;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+header {
+    background: #2c7be5;
+    padding: 0.9rem 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+}
+
+header nav a:hover {
+    opacity: 0.85;
+}
+
+/* ── Layout principal ───────────────────────────────────────── */
+main {
+    padding: 2rem;
+}
+
+.container {
+    max-width: 820px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: #1a2f4e;
+    margin-bottom: 0.4rem;
+}
+
+.subtitulo {
+    color: #718096;
+    margin-bottom: 1.5rem;
+}
+
+/* ── Formularios ────────────────────────────────────────────── */
+label {
+    display: block;
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 0.3rem;
+    margin-top: 1rem;
+}
+
+label:first-of-type {
+    margin-top: 0;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #2d3748;
+    background: #fff;
+    transition: border-color 0.15s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2c7be5;
+    box-shadow: 0 0 0 3px rgba(44,123,229,0.12);
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* ── Botones ─────────────────────────────────────────────────── */
+button,
+.btn-primario {
+    display: inline-block;
+    background: #2c7be5;
+    color: white;
+    padding: 0.55rem 1.4rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: inherit;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+button:hover,
+.btn-primario:hover {
+    background: #1a68d1;
+}
+
+.btn-secundario {
+    display: inline-block;
+    background: white;
+    color: #2c7be5;
+    padding: 0.55rem 1.4rem;
+    border: 1.5px solid #2c7be5;
+    border-radius: 6px;
+    font-size: 15px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.btn-secundario:hover {
+    background: #f0f7ff;
+}
+
+.acciones-form {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+/* ── Separador index ─────────────────────────────────────────── */
+.separador {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 0.88rem;
+    margin: 1.2rem 0 1rem;
+    position: relative;
+}
+
+.separador::before,
+.separador::after {
+    content: "";
+    display: inline-block;
+    width: 30%;
+    height: 1px;
+    background: #e2e8f0;
+    vertical-align: middle;
+    margin: 0 0.6rem;
+}
+
+/* ── Historial header ────────────────────────────────────────── */
+.historial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.8rem;
+    gap: 1rem;
+}
+
+.rut-label {
+    color: #718096;
+    font-size: 0.92rem;
+    margin-top: 0.25rem;
+}
+
+.acciones {
+    display: flex;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+/* ── Bitácora ────────────────────────────────────────────────── */
+.bitacora {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.sesion-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    background: #fafbfc;
+    transition: box-shadow 0.15s;
+}
+
+.sesion-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.sesion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+
+.fecha {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.95rem;
+}
+
+.tipo-tag {
+    background: #ebf4ff;
+    color: #2c7be5;
+    padding: 0.2rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.observaciones {
+    color: #4a5568;
+    line-height: 1.55;
+    margin-bottom: 0.5rem;
+}
+
+.registrado-por {
+    font-size: 0.82rem;
+    color: #a0aec0;
+}
+
+/* ── Estado vacío ────────────────────────────────────────────── */
+.estado-vacio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #718096;
+}
+
+.estado-vacio p {
+    margin-bottom: 1.2rem;
+}
+
+/* ── Link volver ─────────────────────────────────────────────── */
+.volver {
+    display: inline-block;
+    margin-top: 1.8rem;
+    color: #2c7be5;
+    text-decoration: none;
+    font-size: 0.92rem;
+}
+
+.volver:hover {
+    text-decoration: underline;
+}

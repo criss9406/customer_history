@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}{{ nombre }} — Historial Clínico{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Encabezado del paciente -->
+    <div class="historial-header">
+        <div>
+            <h1>{{ nombre }}</h1>
+            <p class="rut-label">RUT: {{ rut }}</p>
+        </div>
+        <div class="acciones">
+            <a href="/sesiones/registrar?rut={{ rut }}" class="btn-primario">
+                + Nueva sesión
+            </a>
+            <a href="/reportes/pdf/{{ rut }}" class="btn-secundario">
+                Descargar PDF
+            </a>
+        </div>
+    </div>
+
+    <!-- Bitácora de sesiones -->
+    {% if sesiones %}
+    <div class="bitacora">
+        {% for sesion in sesiones %}
+        <div class="sesion-card">
+            <div class="sesion-header">
+                <span class="fecha">{{ sesion.fecha }}</span>
+                <span class="tipo-tag">{{ sesion.tipo_atencion }}</span>
+            </div>
+            <p class="observaciones">
+                {% if sesion.observaciones %}
+                    {{ sesion.observaciones }}
+                {% else %}
+                    <em>Sin observaciones registradas.</em>
+                {% endif %}
+            </p>
+            <p class="registrado-por">Registrado por: {{ sesion.registrado_por }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Estado vacío -->
+    <div class="estado-vacio">
+        <p>No hay sesiones registradas para este paciente.</p>
+        <a href="/sesiones/registrar?rut={{ rut }}" class="btn-primario">
+            Registrar primera sesión
+        </a>
+    </div>
+    {% endif %}
+
+    <a href="/" class="volver">← Volver al buscador</a>
+
+</div>
+{% endblock %}

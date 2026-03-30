@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Sesión — Historial Clínico{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1>Registrar Sesión</h1>
+
+    <form action="/sesiones/registrar" method="post">
+
+        <!-- RUT: puede venir precargado desde el historial del paciente -->
+        <label for="rut">RUT del paciente</label>
+        <input
+            type="text"
+            id="rut"
+            name="rut"
+            value="{{ rut }}"
+            placeholder="Ej: 12345678-9"
+            required
+        >
+
+        <label for="nombre_paciente">Nombre del paciente</label>
+        <input
+            type="text"
+            id="nombre_paciente"
+            name="nombre_paciente"
+            placeholder="Nombre completo"
+            required
+        >
+
+        <label for="fecha">Fecha de la sesión</label>
+        <input
+            type="date"
+            id="fecha"
+            name="fecha"
+            value="{{ fecha_hoy }}"
+            required
+        >
+
+        <label for="tipo_atencion">Tipo de atención</label>
+        <select id="tipo_atencion" name="tipo_atencion" required>
+            {% for tipo in tipos_atencion %}
+            <option value="{{ tipo }}">{{ tipo }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="observaciones">Observaciones</label>
+        <textarea
+            id="observaciones"
+            name="observaciones"
+            rows="5"
+            placeholder="Descripción del tratamiento, notas clínicas, indicaciones..."
+        ></textarea>
+
+        <label for="registrado_por">Registrado por</label>
+        <input
+            type="text"
+            id="registrado_por"
+            name="registrado_por"
+            placeholder="Nombre del dentista o recepcionista"
+            required
+        >
+
+        <div class="acciones-form">
+            <button type="submit">Guardar sesión</button>
+            <a href="/" class="btn-secundario">Cancelar</a>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}
