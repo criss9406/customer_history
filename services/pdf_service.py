@@ -12,7 +12,7 @@ Funciones:
 
 import os
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.lib import colors
 from reportlab.platypus import (
@@ -57,6 +57,26 @@ def generar_pdf(rut: str, nombre: str, sesiones: list) -> str:
     )
 
     styles = getSampleStyleSheet()
+
+    # Estilo de texto para celdas del cuerpo de la tabla
+    # Paragraph respeta los anchos de columna y hace wrap automático
+    celda_style = ParagraphStyle(
+        "celda",
+        fontName="Helvetica",
+        fontSize=9,
+        leading=13,       # Espaciado entre líneas
+        spaceAfter=0,
+    )
+
+    # Estilo para cabeceras (texto blanco, negrita)
+    cabecera_style = ParagraphStyle(
+        "cabecera",
+        fontName="Helvetica-Bold",
+        fontSize=9,
+        leading=13,
+        textColor=colors.white,
+    )
+
     elementos = []
 
     # ── Encabezado ────────────────────────────────────────────────────────────
@@ -68,37 +88,42 @@ def generar_pdf(rut: str, nombre: str, sesiones: list) -> str:
 
     # ── Tabla de sesiones ─────────────────────────────────────────────────────
     if sesiones:
-        # Cabecera de la tabla
-        datos_tabla = [["Fecha", "Tipo de Atención", "Observaciones", "Registrado por"]]
+        # Cabecera con Paragraph para consistencia de estilo
+        datos_tabla = [[
+            Paragraph("Fecha", cabecera_style),
+            Paragraph("Tipo de Atención", cabecera_style),
+            Paragraph("Observaciones", cabecera_style),
+            Paragraph("Registrado por", cabecera_style),
+        ]]
 
         for s in sesiones:
+            # Usar Paragraph en cada celda permite wrap automático del texto
             datos_tabla.append([
-                str(s.get("fecha", "")),
-                str(s.get("tipo_atencion", "")),
-                str(s.get("observaciones", "")),
-                str(s.get("registrado_por", "")),
+                Paragraph(str(s.get("fecha", "")), celda_style),
+                Paragraph(str(s.get("tipo_atencion", "")), celda_style),
+                Paragraph(str(s.get("observaciones", "")), celda_style),
+                Paragraph(str(s.get("registrado_por", "")), celda_style),
             ])
 
-        # Anchos de columna (total ~17cm en A4 con márgenes de 2cm)
+        # Anchos de columna — total 17cm (A4 21cm - 2cm margen x2)
+        # Fecha: fija, Tipo: fija, Observaciones: la mayor parte, Registrado: resto
         tabla = Table(
             datos_tabla,
-            colWidths=[2.8 * cm, 3.5 * cm, 8 * cm, 3 * cm],
-            repeatRows=1,   # Repite cabecera si hay salto de página
+            colWidths=[2.5 * cm, 3.5 * cm, 8.0 * cm, 3.0 * cm],
+            repeatRows=1,
         )
 
-        # Estilo base
+        # Estilo base — tipografía la maneja Paragraph, aquí solo layout y color
         estilo_base = [
             # Cabecera
             ("BACKGROUND", (0, 0), (-1, 0), COLOR_PRIMARIO),
-            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-            # Cuerpo
-            ("FONTNAME", (0, 1), (-1, -1), "Helvetica"),
-            ("FONTSIZE", (0, 0), (-1, -1), 9),
+            # Cuerpo y cabecera
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#cbd5e0")),
-            ("TOPPADDING", (0, 0), (-1, -1), 5),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+            ("TOPPADDING", (0, 0), (-1, -1), 6),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+            ("LEFTPADDING", (0, 0), (-1, -1), 5),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 5),
         ]
 
         # Filas alternas (color de fondo intercalado para facilitar lectura)

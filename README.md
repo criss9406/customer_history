@@ -1,62 +1,80 @@
-# costumer_history (historial_clinico)
+# Historial Clínico — MVP
 
-Aplicación web con FastAPI para registrar sesiones, consultar la bitácora de un paciente y generar/descargar el PDF del historial clínico a partir de un archivo Excel.
+Sistema de digitalización de historial de tratamientos para clínicas dentales.
+Ejecución local, sin base de datos externa.
 
-> Nota de nomenclatura: en este proyecto, `costumer_history` se utiliza como nombre del módulo/proyecto, pero el dominio corresponde a `historial_clinico`.
+---
 
 ## Requisitos
 
-- Python 3.10 o superior (recomendado)
+- Python 3.10 o superior
+- pip
+
+---
 
 ## Instalación
 
-1. Copia el proyecto en tu máquina.
+```bash
+# 1. Clona o copia el proyecto
+cd historial_clinico
 
-2. Crear y activar el entorno virtual (si aún no existe):
+# 2. Crea un entorno virtual (recomendado)
+python -m venv venv
 
-   - **Windows (PowerShell):**
-     - `python -m venv venv`
-     - `.\venv\Scripts\Activate.ps1`
+# Windows
+venv\Scripts\activate
 
-   - **Windows (cmd):**
-     - `python -m venv venv`
-     - `venv\Scripts\activate.bat`
+# 3. Instala las dependencias
+pip install -r requirements.txt
+```
 
-   - **Linux / macOS:**
-     - `python3 -m venv venv`
-     - `source venv/bin/activate`
+---
 
-3. Instalar dependencias:
+## Ejecución
 
-   - `pip install -r requirements.txt`
+```bash
+uvicorn main:app --reload
+```
 
-4. `data/historial.xlsx` es el Excel central (se crea automáticamente cuando implementes la lógica). La carpeta `output/` almacenará los PDFs generados bajo demanda.
+Abre el navegador en: **http://localhost:8000**
+
+---
 
 ## Estructura del proyecto
 
-- `main.py` — Punto de entrada, instancia FastAPI y registro de rutas.
+```
+historial_clinico/
+├── main.py                  # Punto de entrada
+├── routes/
+│   ├── sesiones.py          # Registrar sesión
+│   ├── pacientes.py         # Buscar y ver historial
+│   └── reportes.py          # Generar PDF
+├── services/
+│   ├── excel_service.py     # Lectura/escritura Excel
+│   └── pdf_service.py       # Generación PDF
+├── templates/               # HTML (Jinja2)
+├── static/                  # CSS
+├── data/                    # historial.xlsx (se crea automáticamente)
+├── output/                  # PDFs generados
+└── requirements.txt
+```
 
-- `routes/`
-  - `sesiones.py` — Registrar nueva sesión (GET form + POST datos).
-  - `pacientes.py` — Buscar paciente y mostrar bitácora en pantalla.
-  - `reportes.py` — Generar y descargar PDF del historial.
+---
 
-- `services/`
-  - `excel_service.py` — Lectura y escritura del Excel centralizado.
-  - `pdf_service.py` — Construcción y generación del PDF.
+## Uso
 
-- `templates/`
-  - `base.html` — Layout común (header, navegación, estilos base).
-  - `index.html` — Página principal con buscador por RUT.
-  - `registrar.html` — Formulario para registrar sesión.
-  - `historial.html` — Bitácora del paciente (vista en pantalla).
+| Acción | URL |
+|---|---|
+| Buscar paciente | `http://localhost:8000/` |
+| Ver historial | `http://localhost:8000/paciente/{rut}/historial` |
+| Registrar sesión | `http://localhost:8000/sesiones/registrar` |
+| Descargar PDF | `http://localhost:8000/reportes/pdf/{rut}` |
 
-- `static/`
-  - `style.css` — Estilos básicos compartidos.
+---
 
-- `data/`
-  - `historial.xlsx` — Base de datos Excel (se crea automáticamente).
+## Notas importantes
 
-- `output/`
-  - PDFs generados por paciente (bajo demanda).
-
+- El archivo `data/historial.xlsx` se crea automáticamente en el primer uso.
+- Los PDFs se guardan en `output/historial_{rut}.pdf` y se sobreescriben en cada generación.
+- No modificar el orden de columnas en el Excel manualmente.
+- Esta versión no tiene autenticación. Para uso en red local, asegurarse de que solo los equipos autorizados tengan acceso.
