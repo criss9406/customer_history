@@ -9,7 +9,7 @@
     <div class="historial-header">
         <div>
             <h1>{{ nombre }}</h1>
-            <p class="rut-label">Patente: {{ rut }}</p>
+            <p class="rut-label">RUT Cliente: {{ rut }}</p>
         </div>
         <div class="acciones">
             <a href="/sesiones/registrar?rut={{ rut }}&nombre_paciente={{ nombre|urlencode }}" class="btn-primario">
@@ -21,23 +21,51 @@
         </div>
     </div>
 
+    <hr>
+
+    {% if patentes %}
+    <!-- Filtros de Vehículo -->
+    <div class="filtros" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+        <label for="filtro_pat"><strong>Filtrar por Vehículo (Patente):</strong></label>
+        <form action="/paciente/{{ rut }}/historial" method="get" style="display: inline;">
+            <select name="filtro_pat" id="filtro_pat" onchange="this.form.submit()" style="padding: 0.4rem; border-radius: 4px; border: 1px solid #ccc;">
+                <option value="">Todos los vehículos</option>
+                {% for p in patentes %}
+                <option value="{{ p }}" {% if pat_seleccionada == p %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+    {% endif %}
+
     <!-- Bitácora de sesiones -->
     {% if sesiones %}
     <div class="bitacora">
-        {% for sesion in sesiones %}
+        {% for s in sesiones %}
         <div class="sesion-card">
             <div class="sesion-header">
-                <span class="fecha">{{ sesion.fecha }}</span>
-                <span class="tipo-tag">{{ sesion.tipo_atencion }}</span>
+                <span class="fecha">{{ s.fecha }}</span>
+                <span class="tipo-tag">{{ s.tipo_servicio }}</span>
             </div>
+            
+            <p><strong>Vehículo:</strong> {{ s.marca }} {{ s.modelo }} (Patente: {{ s.patente }})</p>
+            {% if s.kilometraje %}
+            <p><strong>Kilometraje:</strong> {{ s.kilometraje }} km</p>
+            {% endif %}
+            
             <p class="observaciones">
-                {% if sesion.observaciones %}
-                    {{ sesion.observaciones }}
+                {% if s.trabajo_realizado %}
+                    {{ s.trabajo_realizado }}
                 {% else %}
-                    <em>Sin observaciones registradas.</em>
+                    <em>Sin detalles de trabajo registrado.</em>
                 {% endif %}
             </p>
-            <p class="registrado-por">Registrado por: {{ sesion.registrado_por }}</p>
+            
+            {% if s.repuestos_usados %}
+            <p><strong>Repuestos:</strong> {{ s.repuestos_usados }}</p>
+            {% endif %}
+            
+            <p class="registrado-por">Mecánico: {{ s.mecanico }}</p>
         </div>
         {% endfor %}
     </div>

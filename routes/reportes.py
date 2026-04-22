@@ -30,8 +30,8 @@ def descargar_pdf(rut: str):
             status_code=404,
         )
 
-    paciente = excel_service.obtener_paciente(rut)
-    nombre = paciente["nombre_paciente"] if paciente else "Desconocido"
+    cliente = excel_service.obtener_paciente(rut)
+    nombre = cliente["nombre_paciente"] if cliente else "Cliente Desconocido"
     ruta_pdf = pdf_service.generar_pdf(rut, nombre, sesiones)
 
     return FileResponse(

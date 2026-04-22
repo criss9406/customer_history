@@ -91,18 +91,18 @@ def generar_pdf(rut: str, nombre: str, sesiones: list) -> str:
         # Cabecera con Paragraph para consistencia de estilo
         datos_tabla = [[
             Paragraph("Fecha", cabecera_style),
-            Paragraph("Tipo de Atención", cabecera_style),
-            Paragraph("Observaciones", cabecera_style),
-            Paragraph("Registrado por", cabecera_style),
+            Paragraph("Vehículo", cabecera_style),
+            Paragraph("Trabajo Realizado", cabecera_style),
+            Paragraph("Mecánico", cabecera_style),
         ]]
 
         for s in sesiones:
             # Usar Paragraph en cada celda permite wrap automático del texto
             datos_tabla.append([
                 Paragraph(str(s.get("fecha", "")), celda_style),
-                Paragraph(str(s.get("tipo_atencion", "")), celda_style),
-                Paragraph(str(s.get("observaciones", "")), celda_style),
-                Paragraph(str(s.get("registrado_por", "")), celda_style),
+                Paragraph(f"{s.get('marca', '')} {s.get('modelo', '')} ({s.get('patente', '')})", celda_style),
+                Paragraph(str(s.get("trabajo_realizado", "")), celda_style),
+                Paragraph(str(s.get("mecanico", "")), celda_style),
             ])
 
         # Anchos de columna — total 17cm (A4 21cm - 2cm margen x2)

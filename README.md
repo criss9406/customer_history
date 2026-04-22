@@ -79,7 +79,3 @@ historial_clinico/
 - No modificar el orden de columnas en el Excel manualmente.
 - Esta versión no tiene autenticación. Para uso en red local, asegurarse de que solo los equipos autorizados tengan acceso.
 
-### Notas de Desarrollo (Rama Autofix)
-- **Mejora futura:** Generar una nueva base de datos (nueva hoja en el archivo `.xlsx`) para tener un registro independiente de vehículos, dado que un mismo cliente puede tener más de uno. En esta nueva base de datos, el identificador único (ID) será la patente.
-- **Búsqueda Extendida:** Ampliar el rango de búsqueda en la página principal, permitiendo buscar tanto por RUT del cliente como por Patente del vehículo.
-- **Filtros en el Historial:** Agregar un sistema de filtros en la pestaña del historial para permitir buscar u ordenar las atenciones por Patente u otros campos relevantes (ej. fecha o tipo de servicio).

@@ -27,28 +27,53 @@ def index(request: Request):
 @router.get("/buscar")
 def buscar(rut: str):
     """
-    Intermediario entre el formulario de búsqueda (que envía query params)
-    y la ruta de historial (que usa path params).
-
-    Los formularios HTML GET no pueden construir rutas dinámicas,
-    por eso esta ruta actúa como puente.
+    Busca por RUT o Patente.
+    Si encuentra la patente, redirige al historial del dueño con el filtro aplicado.
+    Si no, asume que se ingresó un RUT.
     """
-    return RedirectResponse(url=f"/paciente/{rut.strip()}/historial")
+    termino = rut.strip().upper()
+    rut_encontrado = excel_service.buscar_cliente_por_patente(termino)
+    
+    if rut_encontrado:
+        # Se ingresó una patente, redirigir al historial del dueño filtrando por esa patente
+        return RedirectResponse(url=f"/paciente/{rut_encontrado}/historial?filtro_pat={termino}")
+    else:
+        # Se asume que es un RUT
+        return RedirectResponse(url=f"/paciente/{termino}/historial")
 
 
 @router.get("/paciente/{rut}/historial")
-def historial_paciente(request: Request, rut: str):
+def historial_paciente(request: Request, rut: str, filtro_pat: str = None):
     """
-    Recupera todas las sesiones del paciente desde Excel
-    y las renderiza en formato bitácora.
+    Recupera todas las sesiones del paciente desde Excel.
+    Incluye filtro opcional por patente.
     """
-    sesiones = excel_service.obtener_sesiones(rut)
+    rut = rut.strip()
+    todas_sesiones = excel_service.obtener_sesiones(rut)
 
     paciente = excel_service.obtener_paciente(rut)
-    nombre = paciente["nombre_paciente"] if paciente else "Paciente no encontrado"
+    nombre = paciente["nombre_paciente"] if paciente else "Cliente no encontrado"
+
+    # Extraer patentes únicas de las sesiones
+    patentes = set()
+    for s in todas_sesiones:
+        if s.get("patente"):
+            patentes.add(s["patente"])
+    patentes = sorted(list(patentes))
+    
+    # Filtrar sesiones si hay filtro_pat
+    sesiones_mostrar = todas_sesiones
+    if filtro_pat:
+        sesiones_mostrar = [s for s in todas_sesiones if s.get("patente") == filtro_pat]
 
     return templates.TemplateResponse(
         request=request,
         name="historial.html",
-        context={"rut": rut, "nombre": nombre, "sesiones": sesiones},
+        context={
+            "rut": rut, 
+            "nombre": nombre, 
+            "sesiones": sesiones_mostrar,
+            "patentes": patentes,
+            "pat_seleccionada": filtro_pat
+        },
     )

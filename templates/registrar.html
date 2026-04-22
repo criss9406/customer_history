@@ -9,14 +9,25 @@
 
     <form action="/sesiones/registrar" method="post">
 
-        <!-- RUT: puede venir precargado desde el historial del paciente -->
-        <label for="rut">Patente del Vehículo</label>
+        <!-- RUT del cliente -->
+        <label for="rut_cliente">RUT del Cliente</label>
         <input
             type="text"
-            id="rut"
-            name="rut"
-            value="{{ rut }}"
+            id="rut_cliente"
+            name="rut_cliente"
+            value="{{ rut_cliente }}"
             placeholder="Ej: 12345678-9"
+            required
+        >
+
+        <!-- Patente del vehículo -->
+        <label for="patente">Patente del Vehículo</label>
+        <input
+            type="text"
+            id="patente"
+            name="patente"
+            value="{{ patente }}"
+            placeholder="Ej: AB1234 o ABCD12"
             required
         >
 
@@ -25,18 +36,11 @@
             type="text"
             id="nombre_paciente"
             name="nombre_paciente"
-            placeholder="Nombre" value="{{ nombre_paciente }}"
+            placeholder="Nombre Completo" value="{{ nombre_paciente }}"
             required
         >
 
-        <label for="apellido_paciente">Apellido del Cliente</label>
-        <input
-            type="text"
-            id="apellido_paciente"
-            name="apellido_paciente"
-            placeholder="Apellido" value="{{ apellido_paciente }}"
-            required
-        >
+
 
         <label for="fecha">Fecha</label>
         <input
