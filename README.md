@@ -85,3 +85,21 @@ historial_clinico/
 - **Filtro por equipo:** Incluir un filtro en la pestaña del historial que permita buscar u ordenar por equipo, basándose en la columna "referencia".
 - **Visualización en historial:** Mostrar el equipo asociado a cada servicio directamente dentro de las tarjetas en la ventana del historial.
 - **Implementación desde la raíz:** Todos estos ajustes deben realizarse partiendo desde la lógica que crea y gestiona el archivo `.xlsx` (en `excel_service.py`).
+
+---
+
+## Variantes del Proyecto (Ramas)
+
+El proyecto está diseñado para adaptarse a distintas industrias realizando ajustes visuales (y leves modificaciones arquitectónicas) en distintas ramas.
+
+```mermaid
+gitGraph
+    commit id: "MVP Clínica Dental"
+    branch autofix-taller-mecanico
+    commit id: "Propuesta Taller Mecánico"
+    checkout main
+    branch hidropro-bombas
+    commit id: "Propuesta Mantenimiento Bombas"
+    checkout main
+    commit id: "Actualizaciones base"
+```
