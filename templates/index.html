@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Buscar Paciente — Historial Clínico{% endblock %}
+{% block title %}Buscar Cliente — Hidropro Bombas{% endblock %}
 
 {% block content %}
 <div class="container">
 
-    <h1>Buscar Paciente</h1>
-    <p class="subtitulo">Ingresa el RUT para ver el historial de tratamientos.</p>
+    <h1>Buscar Cliente</h1>
+    <p class="subtitulo">Ingresa el RUT para ver el historial de servicios.</p>
 
     <!-- Formulario de búsqueda -->
     <!-- GET /buscar?rut=... redirige a /paciente/{rut}/historial -->
     <form action="/buscar" method="get">
-        <label for="rut">RUT del paciente</label>
+        <label for="rut">RUT del Cliente</label>
         <input
             type="text"
             id="rut"
@@ -23,11 +23,7 @@
         <button type="submit">Ver historial</button>
     </form>
 
-    <div class="separador">¿Primera sesión del paciente?</div>
 
-    <a href="/sesiones/registrar" class="btn-secundario">
-        + Registrar nueva sesión
-    </a>
 
 </div>
 {% endblock %}

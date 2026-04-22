@@ -17,29 +17,28 @@ from datetime import date
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-# Opciones disponibles para el campo tipo_atencion
-TIPOS_ATENCION = [
-    "Limpieza",
-    "Extracción",
-    "Endodoncia",
-    "Ortodoncia",
-    "Revisión",
-    "Otro",
+# Opciones disponibles para el campo tipo_servicio
+TIPOS_SERVICIO = [
+    "Mantenimiento Preventivo",
+    "Reparación de Sellos",
+    "Cambio de Rodamientos",
+    "Alineación Láser",
+    "Prueba Hidrostática",
+    "Rebobinado de Motor",
+    "Otro"
 ]
 
-
 @router.get("/sesiones/registrar")
-def form_registrar(request: Request, rut: str = ""):
+def form_registrar(request: Request, rut: str = "", nombre_paciente: str = ""):
     """
-    Muestra el formulario para registrar una nueva sesión.
-    Si viene desde el historial de un paciente, el RUT llega precargado.
+    Muestra el formulario para registrar un nuevo servicio.
+    Si viene desde el historial de un cliente, el RUT y el nombre llegan precargados.
     """
     return templates.TemplateResponse(
         request=request,
         name="registrar.html",
-        context={"rut": rut, "fecha_hoy": date.today().isoformat(), "tipos_atencion": TIPOS_ATENCION},
+        context={"rut": rut, "nombre_paciente": nombre_paciente, "fecha_hoy": date.today().isoformat(), "tipos_atencion": TIPOS_SERVICIO},
     )
-
 
 @router.post("/sesiones/registrar")
 def registrar_sesion(
@@ -49,21 +48,28 @@ def registrar_sesion(
     tipo_atencion: str = Form(...),
     observaciones: str = Form(default=""),
     registrado_por: str = Form(...),
+    equipo: str = Form(default=""),
+    referencia: str = Form(default=""),
+    ubicacion: str = Form(default=""),
+    presion_bar: str = Form(default=""),
+    repuestos_usados: str = Form(default=""),
 ):
     """
     Recibe los datos del formulario, los limpia y los guarda en Excel.
-    Al finalizar redirige al historial del paciente.
     """
     sesion = {
         "rut": rut.strip(),
         "nombre_paciente": nombre_paciente.strip(),
         "fecha": fecha,
-        "tipo_atencion": tipo_atencion,
-        "observaciones": observaciones.strip(),
-        "registrado_por": registrado_por.strip(),
+        "tipo_servicio": tipo_atencion,
+        "trabajo_realizado": observaciones.strip(),
+        "tecnico": registrado_por.strip(),
+        "equipo": equipo.strip(),
+        "referencia": referencia.strip(),
+        "ubicacion": ubicacion.strip(),
+        "presion_bar": presion_bar,
+        "repuestos_usados": repuestos_usados.strip(),
     }
     excel_service.guardar_sesion(sesion)
 
-    # Redirige al historial del paciente recién registrado
-    # 303 See Other es el código correcto para redirect post POST
     return RedirectResponse(url=f"/paciente/{sesion['rut']}/historial", status_code=303)

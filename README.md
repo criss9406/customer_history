@@ -78,3 +78,10 @@ historial_clinico/
 - Los PDFs se guardan en `output/historial_{rut}.pdf` y se sobreescriben en cada generación.
 - No modificar el orden de columnas en el Excel manualmente.
 - Esta versión no tiene autenticación. Para uso en red local, asegurarse de que solo los equipos autorizados tengan acceso.
+
+### Notas de Desarrollo (Rama Hidropro Bombas)
+*Sugerencias para futuras iteraciones del backend:*
+- **Base de datos de equipos:** Agregar una hoja o tabla exclusiva para registrar los equipos, donde cada uno reciba un ID correlativo generado automáticamente.
+- **Filtro por equipo:** Incluir un filtro en la pestaña del historial que permita buscar u ordenar por equipo, basándose en la columna "referencia".
+- **Visualización en historial:** Mostrar el equipo asociado a cada servicio directamente dentro de las tarjetas en la ventana del historial.
+- **Implementación desde la raíz:** Todos estos ajustes deben realizarse partiendo desde la lógica que crea y gestiona el archivo `.xlsx` (en `excel_service.py`).

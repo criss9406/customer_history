@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Registrar Sesión — Historial Clínico{% endblock %}
+{% block title %}Registrar Servicio — Hidropro Bombas{% endblock %}
 
 {% block content %}
 <div class="container">
 
-    <h1>Registrar Sesión</h1>
+    <h1>Registrar Servicio</h1>
 
     <form action="/sesiones/registrar" method="post">
 
         <!-- RUT: puede venir precargado desde el historial del paciente -->
-        <label for="rut">RUT del paciente</label>
+        <label for="rut">RUT del Cliente</label>
         <input
             type="text"
             id="rut"
@@ -20,16 +20,16 @@
             required
         >
 
-        <label for="nombre_paciente">Nombre del paciente</label>
+        <label for="nombre_paciente">Nombre del Cliente</label>
         <input
             type="text"
             id="nombre_paciente"
             name="nombre_paciente"
-            placeholder="Nombre completo"
+            placeholder="Nombre" value="{{ nombre_paciente }}"
             required
         >
 
-        <label for="fecha">Fecha de la sesión</label>
+        <label for="fecha">Fecha</label>
         <input
             type="date"
             id="fecha"
@@ -38,32 +38,73 @@
             required
         >
 
-        <label for="tipo_atencion">Tipo de atención</label>
+        <label for="tipo_atencion">Tipo de Servicio</label>
         <select id="tipo_atencion" name="tipo_atencion" required>
             {% for tipo in tipos_atencion %}
             <option value="{{ tipo }}">{{ tipo }}</option>
             {% endfor %}
         </select>
 
-        <label for="observaciones">Observaciones</label>
+        <label for="equipo">Equipo</label>
+        <input
+            type="text"
+            id="equipo"
+            name="equipo"
+            placeholder="Ej: Bomba Centrífuga 2HP"
+        >
+
+        <label for="referencia">Referencia / Etiqueta</label>
+        <input
+            type="text"
+            id="referencia"
+            name="referencia"
+            placeholder="Ej: Bomba de Pozo 1"
+        >
+
+        <label for="ubicacion">Ubicación</label>
+        <input
+            type="text"
+            id="ubicacion"
+            name="ubicacion"
+            placeholder="Ej: Sala de Máquinas, Edificio A"
+        >
+
+        <label for="presion_bar">Presión de Trabajo (Bar)</label>
+        <input
+            type="number"
+            step="0.1"
+            id="presion_bar"
+            name="presion_bar"
+            placeholder="Ej: 3.5"
+        >
+
+        <label for="observaciones">Trabajo Realizado</label>
         <textarea
             id="observaciones"
             name="observaciones"
             rows="5"
-            placeholder="Descripción del tratamiento, notas clínicas, indicaciones..."
+            placeholder="Descripción del mantenimiento, limpieza, purgas..."
         ></textarea>
 
-        <label for="registrado_por">Registrado por</label>
+        <label for="repuestos_usados">Repuestos Usados</label>
+        <textarea
+            id="repuestos_usados"
+            name="repuestos_usados"
+            rows="3"
+            placeholder="Rodamientos, sellos mecánicos, o-rings..."
+        ></textarea>
+
+        <label for="registrado_por">Técnico</label>
         <input
             type="text"
             id="registrado_por"
             name="registrado_por"
-            placeholder="Nombre del dentista o recepcionista"
+            placeholder="Nombre del técnico responsable"
             required
         >
 
         <div class="acciones-form">
-            <button type="submit">Guardar sesión</button>
+            <button type="submit">Guardar servicio</button>
             <a href="/" class="btn-secundario">Cancelar</a>
         </div>
 
