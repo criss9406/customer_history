@@ -19,9 +19,8 @@ body {
     line-height: 1.5;
 }
 
-/* ── Header ─────────────────────────────────────────────────── */
 header {
-    background: #2c7be5;
+    background: #2d3748;
     padding: 0.9rem 2rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
@@ -95,8 +94,8 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border-color: #2c7be5;
-    box-shadow: 0 0 0 3px rgba(44,123,229,0.12);
+    border-color: #dd6b20;
+    box-shadow: 0 0 0 3px rgba(221,107,32,0.12);
 }
 
 textarea {
@@ -107,7 +106,7 @@ textarea {
 button,
 .btn-primario {
     display: inline-block;
-    background: #2c7be5;
+    background: #dd6b20;
     color: white;
     padding: 0.55rem 1.4rem;
     border: none;
@@ -122,15 +121,15 @@ button,
 
 button:hover,
 .btn-primario:hover {
-    background: #1a68d1;
+    background: #c05621;
 }
 
 .btn-secundario {
     display: inline-block;
     background: white;
-    color: #2c7be5;
+    color: #dd6b20;
     padding: 0.55rem 1.4rem;
-    border: 1.5px solid #2c7be5;
+    border: 1.5px solid #dd6b20;
     border-radius: 6px;
     font-size: 15px;
     text-decoration: none;
@@ -139,7 +138,7 @@ button:hover,
 }
 
 .btn-secundario:hover {
-    background: #f0f7ff;
+    background: #fffaf0;
 }
 
 .acciones-form {
@@ -223,8 +222,8 @@ button:hover,
 }
 
 .tipo-tag {
-    background: #ebf4ff;
-    color: #2c7be5;
+    background: #feebc8;
+    color: #c05621;
     padding: 0.2rem 0.75rem;
     border-radius: 20px;
     font-size: 0.82rem;
@@ -257,7 +256,7 @@ button:hover,
 .volver {
     display: inline-block;
     margin-top: 1.8rem;
-    color: #2c7be5;
+    color: #dd6b20;
     text-decoration: none;
     font-size: 0.92rem;
 }

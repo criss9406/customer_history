@@ -30,11 +30,13 @@ def descargar_pdf(rut: str):
             status_code=404,
         )
 
-    nombre = sesiones[0]["nombre_paciente"]
+    paciente = excel_service.obtener_paciente(rut)
+    nombre = paciente["nombre_paciente"] if paciente else "Desconocido"
     ruta_pdf = pdf_service.generar_pdf(rut, nombre, sesiones)
 
     return FileResponse(
         path=ruta_pdf,
         filename=f"historial_{rut}.pdf",
         media_type="application/pdf",
+        content_disposition_type="inline",
     )

@@ -44,8 +44,8 @@ def historial_paciente(request: Request, rut: str):
     """
     sesiones = excel_service.obtener_sesiones(rut)
 
-    # Extrae el nombre del primer registro disponible
-    nombre = sesiones[0]["nombre_paciente"] if sesiones else "Paciente no encontrado"
+    paciente = excel_service.obtener_paciente(rut)
+    nombre = paciente["nombre_paciente"] if paciente else "Paciente no encontrado"
 
     return templates.TemplateResponse(
         request=request,

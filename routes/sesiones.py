@@ -29,7 +29,7 @@ TIPOS_ATENCION = [
 
 
 @router.get("/sesiones/registrar")
-def form_registrar(request: Request, rut: str = ""):
+def form_registrar(request: Request, rut: str = "", nombre_paciente: str = ""):
     """
     Muestra el formulario para registrar una nueva sesión.
     Si viene desde el historial de un paciente, el RUT llega precargado.
@@ -37,7 +37,7 @@ def form_registrar(request: Request, rut: str = ""):
     return templates.TemplateResponse(
         request=request,
         name="registrar.html",
-        context={"rut": rut, "fecha_hoy": date.today().isoformat(), "tipos_atencion": TIPOS_ATENCION},
+        context={"rut": rut, "nombre_paciente": nombre_paciente, "fecha_hoy": date.today().isoformat(), "tipos_atencion": TIPOS_ATENCION},
     )
 
 
@@ -45,6 +45,7 @@ def form_registrar(request: Request, rut: str = ""):
 def registrar_sesion(
     rut: str = Form(...),
     nombre_paciente: str = Form(...),
+    apellido_paciente: str = Form(default=""),
     fecha: str = Form(...),
     tipo_atencion: str = Form(...),
     observaciones: str = Form(default=""),
@@ -54,9 +55,10 @@ def registrar_sesion(
     Recibe los datos del formulario, los limpia y los guarda en Excel.
     Al finalizar redirige al historial del paciente.
     """
+    nombre_completo = f"{nombre_paciente.strip()} {apellido_paciente.strip()}".strip()
     sesion = {
         "rut": rut.strip(),
-        "nombre_paciente": nombre_paciente.strip(),
+        "nombre_paciente": nombre_completo,
         "fecha": fecha,
         "tipo_atencion": tipo_atencion,
         "observaciones": observaciones.strip(),

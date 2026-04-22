@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}{{ nombre }} — Historial Clínico{% endblock %}
+{% block title %}{{ nombre }} — Historial de Mantenimiento{% endblock %}
 
 {% block content %}
 <div class="container">
 
-    <!-- Encabezado del paciente -->
+    <!-- Encabezado del vehículo -->
     <div class="historial-header">
         <div>
             <h1>{{ nombre }}</h1>
-            <p class="rut-label">RUT: {{ rut }}</p>
+            <p class="rut-label">Patente: {{ rut }}</p>
         </div>
         <div class="acciones">
-            <a href="/sesiones/registrar?rut={{ rut }}" class="btn-primario">
-                + Nueva sesión
+            <a href="/sesiones/registrar?rut={{ rut }}&nombre_paciente={{ nombre|urlencode }}" class="btn-primario">
+                + Nuevo Servicio
             </a>
-            <a href="/reportes/pdf/{{ rut }}" class="btn-secundario">
-                Descargar PDF
+            <a href="/reportes/pdf/{{ rut }}" class="btn-secundario" target="_blank">
+                PDF
             </a>
         </div>
     </div>
@@ -45,9 +45,9 @@
     {% else %}
     <!-- Estado vacío -->
     <div class="estado-vacio">
-        <p>No hay sesiones registradas para este paciente.</p>
+        <p>No hay servicios registrados para este vehículo.</p>
         <a href="/sesiones/registrar?rut={{ rut }}" class="btn-primario">
-            Registrar primera sesión
+            Registrar primer servicio
         </a>
     </div>
     {% endif %}

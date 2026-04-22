@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Registrar Sesión — Historial Clínico{% endblock %}
+{% block title %}Registrar Servicio — Autofix{% endblock %}
 
 {% block content %}
 <div class="container">
 
-    <h1>Registrar Sesión</h1>
+    <h1>Registrar Servicio</h1>
 
     <form action="/sesiones/registrar" method="post">
 
         <!-- RUT: puede venir precargado desde el historial del paciente -->
-        <label for="rut">RUT del paciente</label>
+        <label for="rut">Patente del Vehículo</label>
         <input
             type="text"
             id="rut"
@@ -20,16 +20,25 @@
             required
         >
 
-        <label for="nombre_paciente">Nombre del paciente</label>
+        <label for="nombre_paciente">Nombre del Cliente</label>
         <input
             type="text"
             id="nombre_paciente"
             name="nombre_paciente"
-            placeholder="Nombre completo"
+            placeholder="Nombre" value="{{ nombre_paciente }}"
             required
         >
 
-        <label for="fecha">Fecha de la sesión</label>
+        <label for="apellido_paciente">Apellido del Cliente</label>
+        <input
+            type="text"
+            id="apellido_paciente"
+            name="apellido_paciente"
+            placeholder="Apellido" value="{{ apellido_paciente }}"
+            required
+        >
+
+        <label for="fecha">Fecha</label>
         <input
             type="date"
             id="fecha"
@@ -38,32 +47,64 @@
             required
         >
 
-        <label for="tipo_atencion">Tipo de atención</label>
+        <label for="tipo_atencion">Tipo de Servicio</label>
         <select id="tipo_atencion" name="tipo_atencion" required>
             {% for tipo in tipos_atencion %}
             <option value="{{ tipo }}">{{ tipo }}</option>
             {% endfor %}
         </select>
 
-        <label for="observaciones">Observaciones</label>
+        <label for="kilometraje">Kilometraje</label>
+        <input
+            type="number"
+            id="kilometraje"
+            name="kilometraje"
+            placeholder="Ej: 45000"
+        >
+
+        <label for="marca_modelo">Marca</label>
+        <input
+            type="text"
+            id="marca"
+            name="marca"
+            placeholder="Ej: Toyota"
+        >
+
+        <label for="modelo">Modelo de Vehículo</label>
+        <input
+            type="text"
+            id="modelo"
+            name="modelo"
+            placeholder="Ej: Yaris"
+        >
+
+        <label for="observaciones">Trabajo Realizado</label>
         <textarea
             id="observaciones"
             name="observaciones"
             rows="5"
-            placeholder="Descripción del tratamiento, notas clínicas, indicaciones..."
+            placeholder="Descripción del servicio, ajustes, indicaciones..."
         ></textarea>
 
-        <label for="registrado_por">Registrado por</label>
+        <label for="repuestos_usados">Repuestos Usados</label>
+        <textarea
+            id="repuestos_usados"
+            name="repuestos_usados"
+            rows="3"
+            placeholder="Filtros, aceite, bujías..."
+        ></textarea>
+
+        <label for="registrado_por">Mecánico / Técnico</label>
         <input
             type="text"
             id="registrado_por"
             name="registrado_por"
-            placeholder="Nombre del dentista o recepcionista"
+            placeholder="Nombre del técnico"
             required
         >
 
         <div class="acciones-form">
-            <button type="submit">Guardar sesión</button>
+            <button type="submit">Guardar servicio</button>
             <a href="/" class="btn-secundario">Cancelar</a>
         </div>
 
